@@ -34,8 +34,8 @@ var Player = function(name, hp, inv) {
 var onwards = function() {
   if (die === true) {
     console.log("You have failed " + userName + " Looks like you will never make it back to your home, " + userHome);
-  } else if (user.inv.length===rubySlippers) {
-    console.log("Hurray, " + userName + "! You have been granted the ruby slippers! Click your heels three time and think to yourself, 'there is no place like home' and you will find yourself back in " + userHome + " sooner than you know");
+  } else if (user.inv.length === rubySlippers) {
+    console.log("Hurray, " + userName + "! The wizard has come. For your bravery he will grant you your wish of returning to your home. These ruby slippers were a special gift from the great Dorothy of Kansas. Be careful with them! Click your heels three time and think to yourself, 'there is no place like home' and you will find yourself back in " + userHome + " sooner than you know");
   } else if (continueOn === true) {
     console.log("Great! Keep moving");
   }
@@ -97,28 +97,32 @@ var Monster = function() {
 
 //START OF THE GAME
 var userName = readlineSync.question("Hello, and who might you be? ");
-var userHome = readlineSync.question("Awe, hello " + userName + " You're dressed very peculiar, where might you be from?");
+var userHome = readlineSync.question("Awe, hello " + userName + " You're dressed very peculiar, where might you be from? ");
 
 //CREATES NEW PLAYER AND ADDS THEIR NAME TO A FUNCTION
 var user = new Player(userName);
 var evilOz;
 
-
-
-// START OFF WITH ALIVE OR DIE
 var starter = function() {
   startGame.toLowerCase();
   if (startGame === "yes") {
     onwards();
-    console.log("press 'w' to keep walking down the yellow brick road, type 'print' to see your player status ".toLowerCase());
+    console.log("Wonderful! On your way!");
   } else if (startGame === "no") {
     die = true;
     onwards();
+  } else{
+    console.log("That is not a command, but you don't get a choice now. You're in Oz, and you're here to stay unless you play!")
+
   }
 };
 
+
+
 var startGame = readlineSync.question(userHome + ", you say? I don't know where that is, but you are in the land of Oz! There's only one way out, and that is to get the ruby slippers. To do that you will need to cross Oz. To gain favor with the wizard you must bring one emerald, one ruby, and one saphire. I warn you, there are many wild creatures that may harm you. Are you sure you are up for the task? ")
 starter(startGame);
+// START OFF WITH ALIVE OR DIE
+
 
 // KEEP WALKING RANDOM IF A VILLIAN APPEARS
 
@@ -128,8 +132,9 @@ var scenarios = ["Continue walking along the yellow brick raod, nothing here.", 
 
 
 while (true) {
-  var input = readlineSync.question(">>");
-  var input = readlineSync.question("press 'w' to keep walking down the yellow brick road, type 'print' to see your player status ").toLowerCase();
+
+  var input = readlineSync.question("press 'w' to keep walking down the yellow brick road, type 'print' to see your player status >>").toLowerCase();
+
 
   //WALKING OR PRINT
   if (input === "w") {
@@ -153,7 +158,7 @@ while (true) {
             console.log("You made it out with out a scratch!");
             onwards();
             break;
-            //flee and get hit
+
           }
 
         }
@@ -179,14 +184,9 @@ while (true) {
         while (gems.length != 0) {
           var index = Math.floor(Math.random() * gems.length);
           var pickedGem = gems[index];
-
           gems.splice(index, 1);
-            console.log(pickedGem);
-  console.log(user.inv);
           var userArray = user.inv;
           userArray.push(pickedGem);
-
-          console.log(userArray);
           onwards();
           break;
         }
@@ -205,19 +205,3 @@ while (true) {
     console.log(user.print());
   }
 }
-
-
-
-
-
-
-// var hundredMonsters = function() {
-//   var monsterArr = [];
-//   for (var i = 1; i <= 100; i++) {
-//     monsterArr.push(new Monster())
-//
-//   }
-//   console.log(monsterArr);
-// };
-//
-// hundredMonsters();
