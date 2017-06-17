@@ -7,38 +7,41 @@ var readlineSync = require('readline-sync');
 var continueOn = true;
 var die = false;
 var win = false;
-var emerald = false;
-var ruby = false;
-var saphire = false;
+var rubySlippers = 3;
+
+
+var gems = ["ruby", "saphire", "emerald"];
 
 var genNumInRange = function(min, max) {
   return Math.floor(Math.random() * (max - min) + min + 1);
 }
 
+//THIS IS THE PLAYER AND KEEPING TRACK OF THEIR LIFE
+var Player = function(name, hp, inv) {
+  this.name = name;
+  this.hp = hp || 200;
+  this.inv = inv || [];
+  this.print = function() {
+    console.log("Name: " + this.name + "HP " + this.hp);
+    console.log("Inventory " + this.inv);
+    // for (var i = 0; i < this.inv; i++) {
+    //   console.log(inv[i]);
+    // }
+  }
+};
+
 //IF THESE CHANGE THE GAME WILL END OR CONTINUE
 var onwards = function() {
   if (die === true) {
     console.log("You have failed " + userName + " Looks like you will never make it back to your home, " + userHome);
-  } else if (emerald === true && ruby === true && saphire === true) {
+  } else if (user.inv.length===rubySlippers) {
     console.log("Hurray, " + userName + "! You have been granted the ruby slippers! Click your heels three time and think to yourself, 'there is no place like home' and you will find yourself back in " + userHome + " sooner than you know");
   } else if (continueOn === true) {
     console.log("Great! Keep moving");
   }
 
 };
-//THIS IS THE PLAYER AND KEEPING TRACK OF THEIR LIFE
-var Player = function(name, hp, inv) {
-  this.name = name;
-  this.hp = hp || 100;
-  this.inv = inv || []
-  this.print = function() {
-    console.log("Name: " + this.name + "HP " + this.hp);
-    console.log("Inventory");
-    for (var i = 0; i < this.inv; i++) {
-      console.log(inv[i]);
-    }
-  }
-};
+
 
 
 var type = function() {
@@ -107,7 +110,7 @@ var starter = function() {
   startGame.toLowerCase();
   if (startGame === "yes") {
     onwards();
-    console.log("keep going ")
+    console.log("press 'w' to keep walking down the yellow brick road, type 'print' to see your player status ".toLowerCase());
   } else if (startGame === "no") {
     die = true;
     onwards();
@@ -125,7 +128,7 @@ var scenarios = ["Continue walking along the yellow brick raod, nothing here.", 
 
 
 while (true) {
-    var input = readlineSync.question(">>");
+  var input = readlineSync.question(">>");
   var input = readlineSync.question("press 'w' to keep walking down the yellow brick road, type 'print' to see your player status ").toLowerCase();
 
   //WALKING OR PRINT
@@ -147,7 +150,8 @@ while (true) {
         } else {
           var fiftyFifty = genNumInRange(1, 10);
           if (fiftyFifty > 5) {
-            console.log("You made it out with out a scratch!")
+            console.log("You made it out with out a scratch!");
+            onwards();
             break;
             //flee and get hit
           }
@@ -158,6 +162,7 @@ while (true) {
         var fiftyFifty = genNumInRange(1, 10);
         if (fiftyFifty > 8) {
           console.log("You dodged an attack");
+
         } else {
           var damageUser = genNumInRange(1, 100);
           user.hp -= damageUser
@@ -165,13 +170,30 @@ while (true) {
         }
 
       }
-      if(user.hp<=0){
-        die=true;
+      if (user.hp <= 0) {
+        die = true;
         onwards();
         break;
-      }else if( evilOz.hitPoints<=0){
-        console.log(evilOz.type + " died!")
+      } else if (evilOz.hitPoints <= 0) {
+        console.log(evilOz.type + " died!");
+        while (gems.length != 0) {
+          var index = Math.floor(Math.random() * gems.length);
+          var pickedGem = gems[index];
+
+          gems.splice(index, 1);
+            console.log(pickedGem);
+  console.log(user.inv);
+          var userArray = user.inv;
+          userArray.push(pickedGem);
+
+          console.log(userArray);
+          onwards();
+          break;
+        }
+
       }
+      ///adding inventory items
+
 
     } else {
       console.log(probability)
