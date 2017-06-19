@@ -187,6 +187,7 @@ while (true) {
           gems.splice(index, 1);
           var userArray = user.inv;
           userArray.push(pickedGem);
+          console.log("You recieved a "+pickedGem+ " you're one step closer to home!");
           onwards();
           break;
         }
